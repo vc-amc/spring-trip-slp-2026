@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vinh Danh Nhà Tài Trợ - Teambuilding 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --gold:       #D4AF37;
+    --gold-light: #F5E6A3;
+    --gold-dim:   #8A6E20;
+    --diamond:    #B9F2FF;
+    --platinum:   #E5E4E2;
+    --silver:     #C0C0C0;
+    --bronze:     #CD7F32;
+    --bg:         #04060F;
+    --bg2:        #080C1A;
+    --bg3:        #0D1228;
+    --text:       #EDE8D5;
+    --text-dim:   #9A9080;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── STARFIELD ── */
+  #canvas-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── WRAPPER ── */
+  .wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 72px;
+    animation: fadeDown 1.2s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .main-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(28px, 6vw, 56px);
+    font-weight: 900;
+    line-height: 1.15;
+    background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 40%, var(--gold-light) 60%, var(--gold) 80%, var(--gold-dim) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 4s linear infinite, fadeUp 1.2s ease 0.2s both;
+    margin-bottom: 16px;
+  }
+
+  .sub-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(16px, 3vw, 22px);
+    font-weight: 300;
+    color: var(--diamond);
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 28px auto 0;
+    width: fit-content;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s both;
+  }
+  .divider-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .divider-gem {
+    width: 10px; height: 10px;
+    background: var(--diamond);
+    transform: rotate(45deg);
+    box-shadow: 0 0 12px var(--diamond), 0 0 24px rgba(185,242,255,0.4);
+  }
+
+  /* ── LEADERBOARD CARD ── */
+  .board {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 32px;
+    border: 1px solid rgba(212,175,55,0.2);
+    border-bottom: none;
+    background: rgba(212,175,55,0.04);
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 0;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s both;
+  }
+  .board-header span {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+  }
+
+  /* ── SPONSOR ROW ── */
+  .sponsor-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 32px;
+    border: 1px solid rgba(212,175,55,0.15);
+    border-top: none;
+    background: rgba(8,12,26,0.7);
+    backdrop-filter: blur(8px);
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.4s, border-color 0.4s;
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  .sponsor-row:last-child {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .sponsor-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(212,175,55,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .sponsor-row:hover {
+    background: rgba(13,18,40,0.95);
+    border-color: rgba(212,175,55,0.4);
+  }
+  .sponsor-row:hover::before { opacity: 1; }
+  .sponsor-row:hover .sponsor-name { -webkit-text-fill-color: var(--gold-light); }
+  .sponsor-row:hover .rank-badge { box-shadow: 0 0 30px rgba(212,175,55,0.5); }
+
+  /* rank */
+  .rank-badge {
+    flex-shrink: 0;
+    width: 52px; height: 52px;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    transform: rotate(45deg);
+    box-shadow: 0 0 16px rgba(212,175,55,0.2), inset 0 0 16px rgba(212,175,55,0.05);
+    transition: box-shadow 0.4s;
+    background: rgba(212,175,55,0.06);
+  }
+  .rank-badge span { transform: rotate(-45deg); display: block; }
+
+  /* diamond icon */
+  .gem-icon {
+    flex-shrink: 0;
+    font-size: 28px;
+    animation: pulse-gem 3s ease-in-out infinite;
+  }
+
+  /* name block */
+  .name-block { flex: 1; min-width: 0; }
+
+  .sponsor-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(18px, 3.5vw, 30px);
+    font-weight: 700;
+    background: linear-gradient(120deg, var(--gold-dim), var(--gold), var(--gold-light), var(--gold));
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerText 5s linear infinite;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sponsor-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+
+  /* tier badge */
+  .tier-badge {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .tier-gems { display: flex; gap: 4px; }
+  .tier-gem {
+    width: 8px; height: 8px;
+    transform: rotate(45deg);
+    animation: pulse-gem 2s ease-in-out infinite;
+  }
+  .tier-gem:nth-child(2) { animation-delay: 0.3s; }
+  .tier-gem:nth-child(3) { animation-delay: 0.6s; }
+  .tier-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ── INVITATION SECTION ── */
+  .invitation {
+    text-align: center;
+    margin-top: 64px;
+    padding: 40px 24px;
+    border: 1px dashed rgba(212,175,55,0.3);
+    background: linear-gradient(180deg, rgba(8,12,26,0.2) 0%, rgba(212,175,55,0.05) 100%);
+    border-radius: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 2s both;
+  }
+  .invitation-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(20px, 4vw, 32px);
+    color: var(--gold-light);
+    margin-bottom: 16px;
+  }
+  .invitation-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 3vw, 20px);
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .tier-list {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    color: var(--platinum);
+    letter-spacing: 2px;
+    margin: 16px 0 24px;
+  }
+  .tier-list span { margin: 0 6px; }
+  .tier-list .t-plat { color: var(--platinum); }
+  .tier-list .t-gold { color: var(--gold); }
+  .tier-list .t-silv { color: var(--silver); }
+  .tier-list .t-bron { color: var(--bronze); }
+
+  .invitation-names {
+    font-size: clamp(20px, 3.5vw, 26px);
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 600;
+    display: block;
+    margin-top: 8px;
+    text-shadow: 0 0 10px rgba(212,175,55,0.2);
+  }
+
+  /* ── APPRECIATION FOOTER ── */
+  .appreciation {
+    text-align: center;
+    margin-top: 64px;
+    opacity: 0;
+    animation: fadeUp 1s ease 2.6s both;
+  }
+
+  .appreciation-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3.2vw, 26px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto 32px;
+    position: relative;
+  }
+  .appreciation-quote::before,
+  .appreciation-quote::after {
+    content: '"';
+    font-size: 80px;
+    color: rgba(212,175,55,0.15);
+    font-family: Georgia, serif;
+    line-height: 0;
+    position: absolute;
+  }
+  .appreciation-quote::before { top: 32px; left: -20px; }
+  .appreciation-quote::after  { bottom: -16px; right: -20px; content: '"'; }
+
+  .appreciation-sig {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+  }
+
+  .heart-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+  .heart-row span {
+    color: #C9607A;
+    font-size: 22px;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+  .heart-row span:nth-child(2) { animation-delay: 0.2s; }
+  .heart-row span:nth-child(3) { animation-delay: 0.4s; }
+
+  /* ── FLOATING DIAMONDS ── */
+  .float-diamond {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  .float-diamond::before {
+    content: '◆';
+    color: rgba(185,242,255,0.25);
+    text-shadow: 0 0 10px rgba(185,242,255,0.5);
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes shimmerText {
+    0%   { background-position: 0%   center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse-gem {
+    0%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+    50%       { opacity: 0.6; transform: rotate(45deg) scale(1.3); }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%       { transform: scale(1.3); }
+    28%       { transform: scale(1); }
+    42%       { transform: scale(1.2); }
+    70%       { transform: scale(1); }
+  }
+
+  @keyframes floatUp {
+    0%   { opacity: 0;   transform: translateY(0)   rotate(0deg); }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { opacity: 0;   transform: translateY(-100vh) rotate(360deg); }
+  }
+
+  @keyframes rowIn {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* ── GLOW PULSE on top sponsor ── */
+  .sponsor-row:first-of-type {
+    border-color: rgba(212,175,55,0.35);
+    background: rgba(10,14,28,0.9);
+  }
+  .sponsor-row:first-of-type .rank-badge {
+    border-color: var(--gold-light);
+    color: var(--gold-light);
+    box-shadow: 0 0 24px rgba(212,175,55,0.4), inset 0 0 24px rgba(212,175,55,0.08);
+  }
+
+  /* responsive */
+  @media (max-width: 520px) {
+    .tier-badge { display: none; }
+    .sponsor-row { padding: 20px 18px; gap: 14px; }
+    .board-header { padding: 12px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="canvas-bg"></canvas>
+
+<div class="wrapper">
+
+  <header class="header">
+    <p class="eyebrow">Vinh Danh &nbsp;·&nbsp; Honor &nbsp;·&nbsp; Gratitude</p>
+    <h1 class="main-title">Bảng Vàng<br>Nhà Tài Trợ</h1>
+    <p class="sub-title">Cảm ơn các nhà tài trợ hào phóng đã đồng hành cùng sự bùng nổ của anh chị em R&D trong chuyến Teambuilding 2026</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-gem"></div>
+      <div class="divider-line" style="background:linear-gradient(90deg,transparent,var(--diamond),transparent);"></div>
+      <div class="divider-gem"></div>
+      <div class="divider-line"></div>
+    </div>
+  </header>
+
+  <div class="board" id="board">
+    <div class="board-header">
+      <span>Hạng</span>
+      <span>Nhà Tài Trợ</span>
+      <span>Danh Hiệu</span>
+    </div>
+    </div>
+
+  <div class="invitation">
+    <h2 class="invitation-title">Cơ Hội Đồng Hành Trở Thành Nhà Tài Trợ</h2>
+    <p class="invitation-text">
+      Tiếp nối sự hào phóng của các Nhà tài trợ xuất sắc trên Bảng Vàng, ban tổ chức xin trân trọng mở rộng vòng tay đón nhận sự đồng hành từ các cấp độ tài trợ tiếp theo:
+      <span class="tier-list">
+        <span class="t-silv">Bạc ✦</span> 
+        <span class="t-bron">Đồng</span>
+      </span>
+      Đặc biệt gửi lời mời thân thương và kỳ vọng đến các anh chị:<br>
+      <span class="invitation-names">Anh Đào Duy Tình, Chị Đặng Hoài Như</span>
+    </p>
+    <p class="invitation-text" style="margin-top: 16px; font-size: 18px; opacity: 0.9;">
+      Sự đóng góp của anh chị là ngọn lửa tiếp thêm nhiệt huyết cho một mùa Teambuilding rực rỡ!
+    </p>
+  </div>
+
+  <div class="appreciation">
+    <p class="appreciation-quote">
+      Những cột trụ vô hình đứng sau mỗi chuyến đi —<br>
+      chúng tôi mang theo lòng biết ơn này suốt hành trình.
+    </p>
+    <p class="appreciation-sig">Toàn thể thành viên gửi lời tri ân sâu sắc</p>
+    <div class="heart-row">
+      <span>♥</span><span>♥</span><span>♥</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   CẤU HÌNH CÁC HẠNG MỨC TÀI TRỢ
+═══════════════════════════════════════════════ */
+const TIER_CONFIG = {
+  diamond:  { color: 'var(--diamond)',  name: 'Diamond',  icon: '💎', shadow: 'rgba(185,242,255,0.8)' },
+  platinum: { color: 'var(--platinum)', name: 'Platinum', icon: '✨', shadow: 'rgba(229,228,226,0.8)' },
+  gold:     { color: 'var(--gold)',     name: 'Gold',     icon: '👑', shadow: 'rgba(212,175,55,0.8)' },
+  silver:   { color: 'var(--silver)',   name: 'Silver',   icon: '🥈', shadow: 'rgba(192,192,192,0.8)' },
+  bronze:   { color: 'var(--bronze)',   name: 'Bronze',   icon: '🥉', shadow: 'rgba(205,127,50,0.8)' }
+};
+
+/* ═══════════════════════════════════════════════
+   DANH SÁCH NHÀ TÀI TRỢ
+═══════════════════════════════════════════════ */
+const SPONSORS = [
+  { name: "Chị Thùy Ngân",       label: "Nhà Tài Trợ Kim Cương", tier: "diamond" },
+  { name: "Anh Văn Đình Phúc",   label: "Nhà Tài Trợ Bạch Kim",  tier: "platinum" },
+  { name: "Anh Đinh Nho Hào",    label: "Nhà Tài Trợ Vàng",      tier: "gold" },
+];
+
+/* ═══ Render Rows ═══ */
+const board = document.getElementById('board');
+SPONSORS.forEach((s, i) => {
+  const config = TIER_CONFIG[s.tier] || TIER_CONFIG.diamond;
+  const row = document.createElement('div');
+  
+  row.className = 'sponsor-row';
+  row.style.animationDelay = `${1.3 + i * 0.18}s`;
+  row.style.animation = `rowIn 0.7s ease ${1.3 + i * 0.18}s both`;
+  
+  row.innerHTML = `
+    <div class="rank-badge"><span>${i + 1}</span></div>
+    <div class="gem-icon" style="filter: drop-shadow(0 0 8px ${config.shadow}); animation-delay:${i*0.4}s">${config.icon}</div>
+    <div class="name-block">
+      <div class="sponsor-name">${s.name}</div>
+      <div class="sponsor-label">${s.label}</div>
+    </div>
+    <div class="tier-badge">
+      <div class="tier-gems">
+        <div class="tier-gem" style="background: ${config.color}; box-shadow: 0 0 8px ${config.color}"></div>
+        <div class="tier-gem" style="background: ${config.color}; box-shadow: 0 0 8px ${config.color}"></div>
+        <div class="tier-gem" style="background: ${config.color}; box-shadow: 0 0 8px ${config.color}"></div>
+      </div>
+      <span class="tier-label" style="color: ${config.color}">${config.name}</span>
+    </div>`;
+  board.appendChild(row);
+});
+
+/* ═══ Starfield Canvas ═══ */
+const canvas = document.getElementById('canvas-bg');
+const ctx    = canvas.getContext('2d');
+let W, H, stars = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function initStars() {
+  stars = Array.from({ length: 220 }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    r: Math.random() * 1.2 + 0.2,
+    a: Math.random(),
+    speed: Math.random() * 0.004 + 0.002,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawStars(t) {
+  ctx.clearRect(0, 0, W, H);
+  stars.forEach(s => {
+    const alpha = (Math.sin(t * s.speed + s.phase) + 1) / 2 * s.a;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(245,230,163,${alpha * 0.7})`;
+    ctx.fill();
+  });
+}
+
+resize();
+initStars();
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+let t = 0;
+(function loop() {
+  t++;
+  drawStars(t);
+  requestAnimationFrame(loop);
+})();
+
+/* ═══ Floating Diamond Particles ═══ */
+function spawnDiamond() {
+  const el = document.createElement('div');
+  el.className = 'float-diamond';
+  const size = Math.random() * 14 + 8;
+  el.style.cssText = `
+    left: ${Math.random() * 100}vw;
+    bottom: -30px;
+    font-size: ${size}px;
+    animation-duration: ${Math.random() * 10 + 12}s;
+    animation-delay: 0s;
+  `;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 22000);
+}
+setInterval(spawnDiamond, 1400);
+spawnDiamond(); spawnDiamond();
+</script>
+</body>
+</html>
