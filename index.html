@@ -1085,11 +1085,54 @@
     font-size: clamp(18px, 5vw, 23px);
   }
 }
+
+/* ── START MUSIC BUTTON IN WELCOME ── */
+.start-music-btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.1) 100%);
+  border: 2px solid var(--gold);
+  border-radius: 30px;
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+  text-transform: uppercase;
+}
+
+.start-music-btn:hover {
+  background: linear-gradient(135deg, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0.2) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(212,175,55,0.5);
+  color: var(--gold);
+}
+
+.start-music-btn:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .start-music-btn {
+    padding: 12px 24px;
+    font-size: 13px;
+    margin-top: 18px;
+  }
+}
+
 </style>
 
 </head>
 <body>
-
+<audio id="bg-music" loop preload="auto">
+  <source src="MKTO - Classic (Official Video).mp3" type="audio/mpeg">
+  <!-- Add more formats if needed: -->
+  <!-- <source src="background-music.ogg" type="audio/ogg"> -->
+</audio>
 <canvas id="canvas-bg"></canvas>
 
 <div class="wrapper">
@@ -1099,9 +1142,13 @@
       <p class="welcome-text">
         Chào mừng mọi người đến với<br>
         <strong>"SLP Spring Trip 2026"</strong><br>
-        Chúc mọi người 1 kỳ nghỉ vui vẻ, sôi động - bùng cháy hết mình!
+       Chúc anh chị có kỳ nghỉ <span style="color: var(--gold); font-weight: 600;">vui vẻ</span>, 
+        <span style="color: var(--diamond); font-weight: 600;">sôi động</span> và 
+        <span style="color: var(--platinum); font-weight: 600;">đáng nhớ</span>!!
       </p>
-      
+      <button id="start-music-btn" class="start-music-btn">
+  🎵 Bấm vào đây để bắt đầu
+</button>
       <div class="welcome-image">
         <img src="pool.jpeg" alt="Homestay - Địa điểm teambuilding 2026" class="place-img">
       </div>
@@ -1406,6 +1453,7 @@
   </section>
 
 </div>
+<!-- Music Control Button -->
 
 <script>
 /* ═══════════════════════════════════════════════
@@ -1527,6 +1575,53 @@ function spawnDiamond() {
 }
 setInterval(spawnDiamond, 1400);
 spawnDiamond(); spawnDiamond();
+
+/* ═══ BACKGROUND MUSIC CONTROLLER ═══ */
+const bgMusic = document.getElementById('bg-music');
+const musicBtn = document.getElementById('music-toggle');
+let musicStarted = false;
+
+// Attempt to play on first click anywhere on the page
+document.addEventListener('click', function initMusic(e) {
+  if (musicStarted) return;
+  
+  // Ignore clicks on the music button itself
+  if (e.target.closest('#music-toggle')) return;
+  
+  bgMusic.play().catch(() => {
+    // Autoplay blocked, button will handle it
+  });
+  
+  musicBtn.classList.add('playing');
+  musicStarted = true;
+});
+// Start button in welcome section
+const startMusicBtn = document.getElementById('start-music-btn');
+if (startMusicBtn) {
+  startMusicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    bgMusic.play();
+    musicBtn.classList.add('playing');
+    musicStarted = true;
+    startMusicBtn.style.display = 'none'; // Hide button after click
+  });
+}
+// Toggle button click
+musicBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicBtn.classList.add('playing');
+  } else {
+    bgMusic.pause();
+    musicBtn.classList.remove('playing');
+  }
+});
+
+// Keep button state in sync
+bgMusic.addEventListener('play', () => musicBtn.classList.add('playing'));
+bgMusic.addEventListener('pause', () => musicBtn.classList.remove('playing'));
 </script>
 
 </body>
