@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vinh Danh Nhà Tài Trợ - Teambuilding 2026</title>
-<!-- <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Playfair+Display:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --gold:       #D4AF37;
@@ -48,28 +48,11 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     opacity: 0.35;
     pointer-events: none;
     z-index: 1;
   }
-
- .main-title,
-.section-title,
-.invitation-title,
-.contact-title,
-.sponsor-name {
-  font-family: 'Playfair Display', 'Cinzel Decorative', serif;
-  font-weight: 900;           /* Make it stronger */
-  letter-spacing: -0.02em;    /* Slightly tighter for impact */
-  line-height: 1.1;
-}
-
-/* Optional: Extra luxury touch for the main title */
-.main-title {
-  font-size: clamp(36px, 8vw, 68px);   /* Slightly bigger if you want */
-  font-weight: 900;
-}
 
   /* ── WRAPPER ── */
   .wrapper {
@@ -99,7 +82,7 @@
   }
 
   .main-title {
-    font-family: var(--title-font);
+    font-family: 'Cinzel Decorative', serif;
     font-size: clamp(32px, 7vw, 64px);
     font-weight: 900;
     line-height: 1.15;
@@ -240,7 +223,7 @@
   .name-block { flex: 1; min-width: 0; }
 
   .sponsor-name {
-    font-family: var(--title-font);
+    font-family: 'Cinzel Decorative', serif;
     font-size: clamp(20px, 4vw, 32px);
     font-weight: 700;
     background: linear-gradient(120deg, var(--gold-dim), var(--gold), var(--gold-light), var(--gold));
@@ -305,7 +288,7 @@
   }
 
   .section-title {
-    font-family: var(--title-font);
+    font-family: 'Cinzel Decorative', serif;
     font-size: clamp(28px, 6vw, 48px);
     text-align: center;
     margin-bottom: 40px;
@@ -435,13 +418,20 @@
     animation: fadeUp 1s ease 2s both;
   }
 
-  .gallery-grid {
+  /* .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 28px;
     margin-top: 40px;
-  }
+  } */
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);     /* 3 cột */
+    grid-template-rows: repeat(2, auto);       /* 2 hàng */
+    gap: 28px;
+    margin-top: 40px;
+ }
 
   .gallery-item {
     position: relative;
@@ -516,7 +506,7 @@
   }
 
   .invitation-title {
-    font-family: var(--title-font);
+    font-family: 'Cinzel Decorative', serif;
     font-size: clamp(24px, 5vw, 36px);
     color: var(--gold-light);
     margin-bottom: 20px;
@@ -601,7 +591,7 @@
   }
 
   .contact-title {
-    font-family: var(--title-font);
+    font-family: 'Cinzel Decorative', serif;
     font-size: clamp(24px, 5vw, 36px);
     color: var(--gold);
     margin-bottom: 32px;
@@ -777,7 +767,7 @@
     box-shadow: 0 0 24px rgba(212,175,55,0.4), inset 0 0 24px rgba(212,175,55,0.08);
   }
 
-  /* ── RESPONSIVE STYLES ── */
+  /* responsive */
   @media (max-width: 900px) {
     .invitation {
       flex-direction: column;
@@ -801,290 +791,237 @@
   }
 
   @media (max-width: 768px) {
+    .schedule-table {
+      font-size: 14px;
+    }
+    .schedule-table th,
+    .schedule-table td {
+      padding: 16px 10px;
+    }
+    .time-cell {
+      font-size: 14px;
+      min-width: 110px;
+    }
+    .activity-cell {
+      font-size: 16px;
+    }
+    .location-cell,
+    .notes-cell {
+      font-size: 14px;
+    }
     .gallery-grid {
       grid-template-columns: 1fr;
     }
     .contact-grid {
       grid-template-columns: 1fr;
     }
-    .wrapper {
-      padding: 40px 16px 80px;
+  }
+
+  @media (max-width: 520px) {
+    .tier-badge { display: none; }
+    .sponsor-row { padding: 22px 20px; gap: 16px; }
+    .board-header { padding: 14px 20px; }
+    .schedule-table {
+      display: block;
+      overflow-x: auto;
     }
     .tab-btn {
       padding: 14px 28px;
       font-size: 14px;
     }
-  }
-
-  /* ── SPONSOR ROW MOBILE FIXES ── */
-  @media (max-width: 600px) {
-    .sponsor-row {
-      padding: 20px 16px;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    
-    .rank-badge {
-      width: 44px;
-      height: 44px;
-      font-size: 16px;
-    }
-    
-    .gem-icon {
-      font-size: 24px;
-    }
-    
-    .name-block {
-      width: 100%;
-      min-width: 0;
-      margin-top: 8px;
-    }
-    
-    .sponsor-name {
-      font-size: 18px;
-      white-space: normal;
-      line-height: 1.3;
-      overflow: visible;
-      text-overflow: clip;
-    }
-    
-    .sponsor-label {
-      font-size: 13px;
-      margin-top: 2px;
-  }
-    
-    .sponsor-amount {
-      font-size: 14px;
-      margin-top: 4px;
-    }
-    
-    .tier-badge {
-      display: none;
-    }
-    
-    .board-header {
-      padding: 12px 16px;
-    }
-    
-    .board-header span {
-      font-size: 10px;
-      letter-spacing: 2px;
-    }
-  }
-
-  @media (max-width: 400px) {
-    .sponsor-name {
-      font-size: 16px;
-    }
-    
-    .rank-badge {
-      width: 40px;
-      height: 40px;
-      font-size: 14px;
-    }
-    
-    .gem-icon {
-      font-size: 20px;
-    }
-  }
-
-  /* ── ITINERARY TABLE MOBILE FIXES ── */
-  @media (max-width: 768px) {
-    .schedule-table {
-      font-size: 13px;
-    }
-    
-    .schedule-table thead {
-      display: none;
-    }
-    
-    .schedule-table tbody tr {
-      display: block;
-      margin-bottom: 20px;
-      border: 1px solid rgba(212,175,55,0.2);
-      border-radius: 8px;
-      padding: 16px;
-      background: rgba(8,12,26,0.4);
-    }
-    
-    .schedule-table td {
-      display: block;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(212,175,55,0.1);
-      text-align: left !important;
-    }
-    
-    .schedule-table td:last-child {
-      border-bottom: none;
-    }
-    
-    .schedule-table td::before {
-      content: attr(data-label);
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: block;
-      margin-bottom: 4px;
-    }
-    
-    .time-cell {
-      font-size: 15px;
-      min-width: auto;
-      color: var(--gold);
-      font-weight: 700;
-    }
-    
-    .activity-cell {
-      font-size: 16px;
-      font-weight: 600;
-    }
-    
-    .location-cell {
-      font-size: 14px;
-      font-style: italic;
-    }
-    
-    .notes-cell {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    
-    .notes-cell ul {
-      padding-left: 18px;
-      margin: 8px 0 0 0;
-    }
-    
-    .notes-cell li {
-      margin-bottom: 4px;
-      line-height: 1.5;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .schedule-table tbody tr {
-      padding: 12px;
-    }
-    
-    .time-cell {
-      font-size: 14px;
-    }
-    
-    .activity-cell {
-      font-size: 15px;
-    }
-    
-    .location-cell,
-    .notes-cell {
-      font-size: 13px;
-    }
-    
-    .notes-cell ul {
-      padding-left: 16px;
-    }
-    
-    .itinerary-tabs {
-      gap: 12px;
-    }
-    
-    .tab-btn {
-      padding: 12px 20px;
-      font-size: 13px;
-    }
-  }
-
-  .qr-code {
-    width: 180px;
-    height: 180px;
-    background: white;
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-    overflow: hidden;
-  }
-
-  .qr-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-
-  @media (max-width: 600px) {
     .qr-code {
       width: 150px;
       height: 150px;
     }
   }
 
-
-  .welcome-section {
-  margin-bottom: 60px;
-  opacity: 0;
-  animation: fadeUp 1.2s ease 0.3s both;
-  text-align: center;
+  .qr-code {
+  width: 180px;
+  height: 180px;
+  background: white;
+  border-radius: 8px;
+  padding: 8px;                    /* Tạo viền trắng quanh QR */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  overflow: hidden;                /* Quan trọng */
 }
 
-.welcome-content {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.welcome-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(19px, 4.5vw, 26px);
-  line-height: 1.5;
-  color: var(--text);
-  margin-bottom: 32px;
-  font-weight: 300;
-}
-
-.welcome-text strong {
-  font-family: var(--title-font);
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--diamond));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: 1.08em;
-}
-
-.welcome-image {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 2px solid rgba(212,175,55,0.3);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-  max-width: 820px;
-  margin: 0 auto;
-  transition: transform 0.4s ease;
-}
-
-.welcome-image:hover {
-  transform: scale(1.02);
-}
-
-.place-img {
+.qr-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;             /* Giữ tỷ lệ, không bị méo */
   display: block;
-  object-fit: cover;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .welcome-section {
-    margin-bottom: 48px;
+/* Add these improved mobile styles */
+
+/* ── SPONSOR ROW MOBILE FIXES ── */
+@media (max-width: 600px) {
+  .sponsor-row {
+    padding: 20px 16px;
+    gap: 12px;
+    flex-wrap: wrap;
   }
-  .welcome-text {
-    font-size: clamp(18px, 5vw, 23px);
+  
+  .rank-badge {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+  
+  .gem-icon {
+    font-size: 24px;
+  }
+  
+  .name-block {
+    width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+  }
+  
+  .sponsor-name {
+    font-size: 18px;
+    white-space: normal;
+    line-height: 1.3;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  
+  .sponsor-label {
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  
+  .sponsor-amount {
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  
+  .tier-badge {
+    display: none;
+  }
+  
+  .board-header {
+    padding: 12px 16px;
+    font-size: 10px;
   }
 }
+
+@media (max-width: 400px) {
+  .sponsor-name {
+    font-size: 16px;
+  }
+  
+  .rank-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+/* ── ITINERARY TABLE MOBILE FIXES ── */
+@media (max-width: 768px) {
+  .schedule-table {
+    font-size: 13px;
+  }
+  
+  .schedule-table thead {
+    display: none;
+  }
+  
+  .schedule-table tbody tr {
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 8px;
+    padding: 16px;
+    background: rgba(8,12,26,0.4);
+  }
+  
+  .schedule-table td {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+    text-align: left !important;
+  }
+  
+  .schedule-table td:last-child {
+    border-bottom: none;
+  }
+  
+  .schedule-table td::before {
+    content: attr(data-label);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .time-cell {
+    font-size: 15px;
+    min-width: auto;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  
+  .activity-cell {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .location-cell {
+    font-size: 14px;
+    font-style: italic;
+  }
+  
+  .notes-cell {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .notes-cell ul {
+    padding-left: 18px;
+    margin: 8px 0 0 0;
+  }
+  
+  .notes-cell li {
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .schedule-table tbody tr {
+    padding: 12px;
+  }
+  
+  .time-cell {
+    font-size: 14px;
+  }
+  
+  .activity-cell {
+    font-size: 15px;
+  }
+  
+  .location-cell,
+  .notes-cell {
+    font-size: 13px;
+  }
+  
+  .notes-cell ul {
+    padding-left: 16px;
+  }
+}
+
+/* ── ADD DATA LABELS TO HTML ── */
+/* You need to add data-label attributes to your table cells like this: */
 </style>
 
 </head>
@@ -1093,20 +1030,6 @@
 <canvas id="canvas-bg"></canvas>
 
 <div class="wrapper">
-<!-- === WELCOME SECTION - MỚI THÊM === -->
-  <div class="welcome-section">
-    <div class="welcome-content">
-      <p class="welcome-text">
-        Chào mừng mọi người đến với<br>
-        <strong>"SLP Spring Trip 2026"</strong><br>
-        Chúc mọi người 1 kỳ nghỉ vui vẻ, sôi động - bùng cháy hết mình!
-      </p>
-      
-      <div class="welcome-image">
-        <img src="pool.jpeg" alt="Homestay - Địa điểm teambuilding 2026" class="place-img">
-      </div>
-    </div>
-  </div>
 
   <header class="header">
     <p class="eyebrow">Vinh Danh &nbsp;·&nbsp; Honor &nbsp;·&nbsp; Gratitude</p>
@@ -1148,65 +1071,57 @@
             <th>Lưu Ý</th>
           </tr>
         </thead>
+
+        
         <tbody>
           <tr>
             <td class="time-cell" data-label="Thời Gian">08:30 - 08:45</td>
-            <td class="activity-cell" data-label="Hoạt Động">Tập trung & đón xe</td>
-            <td class="location-cell" data-label="Địa Điểm">Đối diện S217 (bến xe bus VinUni) <a href="https://maps.app.goo.gl/CUDwMAkcsdZq2R83A">Link bản đồ</a></td>
-            <td class="notes-cell" data-label="Lưu Ý">
-                <ul>
-                    <li>📍 <strong>Tập trung lúc 8h45</strong> tại bến xe bus VinUni (đối diện S217)</li>
-                    <li>🚗 Anh chị em đi xe riêng có thể gửi xe ở hầm S217 (gửi qua đêm chỉ 30k thôi ạ)</li>
-                    <li>🥐 BTC chuẩn bị sẵn bánh mì, xúc xích, bánh ngọt, đồ ăn vặt & nước lọc để mọi người lót dạ nha</li>
-                    <li>⏰ Đi muộn 5 phút là phạt 50k vào quỹ chung nhaaa 😂 (mọi người cố gắng đúng giờ để vui chung với cả nhà nè)</li>
-                    <li>☕ Ai muốn đi sớm thì ghé ngồi chờ ở Ensora Bistro cũng được, chill lắm ạ!</li>
-                </ul>
-
-                <p><strong>Về trang phục & đồ dùng cần mang theo:</strong></p>
-                <ul>
-                    <li>👙 Quần áo bơi</li>
-                    <li>⚽ Giày đá bóng</li>
-                    <li>🏸 Giày cầu lông / pickleball</li>
-                    <li>🏓 Vợt cầu lông / pickleball</li>
-                    <li>🌟 Và những thứ cá nhân khác mà bạn thấy cần nhé!</li>
-                </ul>
+            <td class="time-cell" data-label="Hoạt Động">Tập trung & đón xe</td>
+            <td class="time-cell" data-label="Địa Điểm">Đối diện S217 (bến xe bus VinUni)</td>
+            <td class="time-cell" data-label="Lưu ý">
+              <ul>
+                <li>Tập trung ở bến xe bus cạnh VinUni đối diện S217</li>
+                <li>Ai đi xe riêng có thể gửi xe tại hầm S217 (gửi qua đêm 30k)</li>
+                <li>BTC chuẩn bị bánh mì, xúc xích, nước lọc, đồ ăn vặt</li>
+                <li>Đi muộn 5 phút phạt 50k vào quỹ 😂</li>
+              </ul>
             </td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">08:45 - 10:30</td>
-            <td class="activity-cell" data-label="Hoạt Động">Di chuyển tới Homestay</td>
-            <td class="location-cell" data-label="Địa Điểm">Trên xe</td>
-            <td class="notes-cell" data-label="Lưu Ý">Thời gian di chuyển dự kiến 1h30 - 2h</td>
+            <td class="time-cell" data-label="Hoạt Động">Di chuyển tới Homestay</td>
+            <td class="time-cell" data-label="Địa Điểm">Trên xe</td>
+            <td class="time-cell" data-label="Lưu ý">Thời gian di chuyển dự kiến 1h30 - 2h</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">10:30 - 11:00</td>
-            <td class="activity-cell" data-label="Hoạt Động">Check-in, chọn phòng</td>
-            <td class="location-cell" data-label="Địa Điểm">Homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý"><a href="https://maps.app.goo.gl/MqiUa1pd5szZPcCp7">Link bản đồ</a></td>
+            <td class="time-cell" data-label="Hoạt Động">Check-in, chọn phòng</td>
+            <td class="time-cell" data-label="Địa Điểm">Homestay</td>
+            <td class="time-cell" data-label="Lưu ý"><a href="https://maps.app.goo.gl/MqiUa1pd5szZPcCp7">Link bản đồ</a></td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">11:00 - 11:45</td>
-            <td class="activity-cell" data-label="Hoạt Động">Pickleball</td>
-            <td class="location-cell" data-label="Địa Điểm">Sân pickleball cạnh homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý">Ai không chơi có thể nghỉ ngơi trong phòng hoặc cafe cạnh sân</td>
+            <td class="time-cell" data-label="Hoạt Động">Pickleball</td>
+            <td class="time-cell" data-label="Địa Điểm">Sân pickleball cạnh homestay</td>
+            <td class="time-cell" data-label="Lưu ý">Ai không chơi có thể nghỉ ngơi trong phòng hoặc cafe cạnh sân</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">12:00 - 13:00</td>
-            <td class="activity-cell" data-label="Hoạt Động">Ăn trưa</td>
-            <td class="location-cell" data-label="Địa Điểm">Homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý">Bữa trưa ăn nhẹ nhàng cơm quê</td>
+            <td class="time-cell" data-label="Hoạt Động">Ăn trưa</td>
+            <td class="time-cell" data-label="Địa Điểm">Homestay</td>
+            <td class="time-cell" data-label="Lưu ý">Bữa trưa ăn nhẹ nhàng cơm quê</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">13:00 - 14:30</td>
-            <td class="activity-cell" data-label="Hoạt Động">Nghỉ ngơi</td>
-            <td class="location-cell" data-label="Địa Điểm"></td>
-            <td class="notes-cell" data-label="Lưu Ý"></td>
+            <td class="time-cell" data-label="Hoạt Động">Nghỉ ngơi</td>
+            <td class="time-cell" data-label="Địa Điểm">-</td>
+            <td class="time-cell" data-label="Lưu ý">-</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">15:00 - 16:30</td>
-            <td class="activity-cell" data-label="Hoạt Động">Đá bóng</td>
-            <td class="location-cell" data-label="Địa Điểm">Sân bóng cạnh homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý">
+            <td class="time-cell" data-label="Hoạt Động">Đá bóng</td>
+            <td class="time-cell" data-label="Địa Điểm">Sân bóng cạnh homestay</td>
+            <td class="time-cell" data-label="Lưu ý">
               <ul>
                 <li>Thi đấu theo danh sách đội bóng</li>
                 <li>Mang giày đá bóng</li>
@@ -1218,15 +1133,15 @@
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">16:45 - 19:00</td>
-            <td class="activity-cell" data-label="Hoạt Động">Bơi, cafe, chơi tự do, tắm rửa</td>
-            <td class="location-cell" data-label="Địa Điểm">Bể bơi trong homestay + Quán cafe</td>
-            <td class="notes-cell" data-label="Lưu Ý"></td>
+            <td class="time-cell" data-label="Hoạt Động">Bơi, cafe, chơi tự do, tắm rửa</td>
+            <td class="time-cell" data-label="Địa Điểm">Bể bơi trong homestay + Quán cafe</td>
+            <td class="time-cell" data-label="Lưu ý">-</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">19:00 - Đêm</td>
-            <td class="activity-cell" data-label="Hoạt Động">Ăn uống, nhậu, karaoke, poker...</td>
-            <td class="location-cell" data-label="Địa Điểm">Homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý"></td>
+            <td class="time-cell" data-label="Hoạt Động">Ăn uống, nhậu, karaoke, poker...</td>
+            <td class="time-cell" data-label="Địa Điểm">Homestay</td>
+            <td class="time-cell" data-label="Lưu ý">-</td>
           </tr>
         </tbody>
       </table>
@@ -1245,21 +1160,21 @@
         <tbody>
           <tr>
             <td class="time-cell" data-label="Thời Gian">07:00 - 11:00</td>
-            <td class="activity-cell" data-label="Hoạt Động">Ăn sáng, chơi tự do</td>
-            <td class="location-cell" data-label="Địa Điểm">Trong khuôn viên homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý"></td>
+            <td class="time-cell" data-label="Hoạt Động">Ăn sáng, chơi tự do</td>
+            <td class="time-cell" data-label="Địa Điểm">Trong khuôn viên homestay</td>
+            <td class="time-cell" data-label="Lưu ý">-</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">11:00 - 12:00</td>
-            <td class="activity-cell" data-label="Hoạt Động">Thu dọn, trả phòng</td>
-            <td class="location-cell" data-label="Địa Điểm">Homestay</td>
-            <td class="notes-cell" data-label="Lưu Ý"></td>
+            <td class="time-cell" data-label="Hoạt Động">Thu dọn, trả phòng</td>
+            <td class="time-cell" data-label="Địa Điểm">Homestay</td>
+            <td class="time-cell" data-label="Lưu ý">-</td>
           </tr>
           <tr>
             <td class="time-cell" data-label="Thời Gian">12:00</td>
-            <td class="activity-cell" data-label="Hoạt Động">Di chuyển về</td>
-            <td class="location-cell" data-label="Địa Điểm">Trả tại 2 điểm: VinUni và Time City</td>
-            <td class="notes-cell" data-label="Lưu Ý"></td>
+            <td class="time-cell" data-label="Hoạt Động">Di chuyển về</td>
+            <td class="time-cell" data-label="Địa Điểm">Trả tại 2 điểm: VinUni và Time City</td>
+            <td class="time-cell" data-label="Lưu ý">-</td>
           </tr>
         </tbody>
       </table>
@@ -1271,6 +1186,7 @@
     <h2 class="section-title">Địa Điểm & Cảnh Quan</h2>
     <div class="gallery-grid">
       <div class="gallery-item">
+        <!-- <div class="gallery-img placeholder-img">🏡</div> -->
         <img src="high.jpeg" alt="Homestay" class="gallery-img">
         <div class="gallery-caption">
           <h3>Homestay</h3>
@@ -1278,6 +1194,7 @@
         </div>
       </div>
       <div class="gallery-item">
+        <!-- <div class="gallery-img placeholder-img">🏊</div> -->
         <img src="main_pool.jpg" alt="Pool" class="gallery-img">
         <div class="gallery-caption">
           <h3>Bể Bơi</h3>
@@ -1285,6 +1202,7 @@
         </div>
       </div>
       <div class="gallery-item">
+        <!-- <div class="gallery-img placeholder-img">⚽</div> -->
         <img src="fb_2.jpg" alt="Foot ball" class="gallery-img">
         <div class="gallery-caption">
           <h3>Sân Bóng</h3>
@@ -1292,6 +1210,7 @@
         </div>
       </div>
       <div class="gallery-item">
+        <!-- <div class="gallery-img placeholder-img">🎾</div> -->
         <img src="picle_ball.jpg" alt="Foot ball" class="gallery-img">
         <div class="gallery-caption">
           <h3>Sân Pickleball</h3>
@@ -1299,6 +1218,7 @@
         </div>
       </div>
       <div class="gallery-item">
+        <!-- <div class="gallery-img placeholder-img">☕</div> -->
         <img src="coffee.jpg" alt="Coffee" class="gallery-img">
         <div class="gallery-caption">
           <h3>Quán Cafe</h3>
@@ -1306,6 +1226,7 @@
         </div>
       </div>
       <div class="gallery-item">
+        <!-- <div class="gallery-img placeholder-img">🌄</div> -->
         <img src="view.jpg" alt="View" class="gallery-img">
         <div class="gallery-caption">
           <h3>Cảnh Quan</h3>
@@ -1337,6 +1258,7 @@
     </div>
     <div class="qr-section">
       <div class="qr-code">
+        <!-- Replace with actual QR code image -->
         <img src="qr2.png" alt="QR Code" class="qr-image">
       </div>
       <div class="qr-label">Quét để trở thành nhà tài trợ </div>
@@ -1352,7 +1274,7 @@
     </p>
     <p class="appreciation-sig">Toàn thể thành viên gửi lời tri ân sâu sắc</p>
     <div class="heart-row">
-      <span>😘</span><span>❤️</span><span>🥰</span>
+      <span>♥</span><span>♥</span><span>♥</span>
     </div>
   </div>
 
@@ -1460,9 +1382,11 @@ SPONSORS.forEach((s, i) => {
 
 /* ═══ Tab Switching ═══ */
 function switchTab(day) {
+  // Remove active class from all tabs and contents
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.day-content').forEach(content => content.classList.remove('active'));
   
+  // Add active class to clicked tab and corresponding content
   event.target.classList.add('active');
   document.getElementById(day).classList.add('active');
 }
