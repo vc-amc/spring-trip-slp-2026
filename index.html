@@ -302,7 +302,10 @@
     }
 
     .sponsor-amount {
-      font-family: 'Cinzel', serif;
+      /* font-family: 'Cinzel', serif; */
+      font-family: 'Inter', 'Cormorant Garamond', system-ui, sans-serif;
+      /* ✅ Font hỗ trợ tiếng Việt */
+
       font-size: 16px;
       font-weight: 700;
       color: var(--gold-light);
@@ -1711,7 +1714,9 @@
       platinum: { color: 'var(--platinum)', name: 'Platinum', icon: '✨', shadow: 'rgba(229,228,226,0.8)' },
       gold: { color: 'var(--gold)', name: 'Gold', icon: '👑', shadow: 'rgba(212,175,55,0.8)' },
       silver: { color: 'var(--silver)', name: 'Silver', icon: '🥈', shadow: 'rgba(192,192,192,0.8)' },
-      bronze: { color: 'var(--bronze)', name: 'Bronze', icon: '🥉', shadow: 'rgba(205,127,50,0.8)' }
+      bronze: { color: 'var(--bronze)', name: 'Bronze', icon: '🥉', shadow: 'rgba(205,127,50,0.8)' },
+      style: { color: 'var(--text-dim)', name: 'Phong Cách', icon: '🎨', shadow: 'rgba(154,144,128,0.6)' }
+
     };
 
     /* ═══════════════════════════════════════════════
@@ -1721,12 +1726,17 @@
       { name: "Anh Mạc Đăng Khoa", label: "Nhà Tài Trợ Kim Cương", amount: "N LẦN NHÀ TÀI TRỢ BẠCH KIM", tier: "diamond" },
       { name: "Chị Thùy Ngân", label: "Nhà Tài Trợ Bạch Kim", amount: "2.666.888 VNĐ", tier: "platinum" },
       { name: "Anh Văn Đình Phúc", label: "Nhà Tài Trợ Vàng", amount: "2.222.222 VNĐ", tier: "gold" },
-      { name: "Anh Đinh Nho Hào", label: "Nhà Tài Trợ Bạc", amount: "3.333 VNĐ", tier: "silver" },
+      { name: "Anh Nguyễn Đình Nghị", label: "Nhà Tài Trợ Bạc", amount: "1.888.888 VNĐ", tier: "silver" },
+      { name: "Anh Nhữ Đình Đức", label: "Nhà Tài Trợ Đồng", amount: "1.000.000 VNĐ", tier: "bronze" },
+      { name: "Nhạc công Chu Thiên Hải", label: "Nhà Tài Trợ Phong Cách", amount: "2 giờ đánh đàn tê ngón tay", tier: "style" },
+      { name: "Anh Đinh Nho Hào", label: "Nhà Tài Trợ Phong Cách", amount: "3.333 VNĐ", tier: "style" },
     ];
 
     /* ═══ Render Rows ═══ */
     const board = document.getElementById('board');
     SPONSORS.forEach((s, i) => {
+      const isLowerThanBronze = !['diamond', 'platinum', 'gold', 'silver', 'bronze'].includes(s.tier);
+      const displayLabel = isLowerThanBronze ? "Nhà Tài Trợ Phong Cách" : s.label;
       const config = TIER_CONFIG[s.tier] || TIER_CONFIG.diamond;
       const row = document.createElement('div');
 
@@ -1739,7 +1749,7 @@
     <div class="gem-icon" style="filter: drop-shadow(0 0 8px ${config.shadow}); animation-delay:${i * 0.4}s">${config.icon}</div>
     <div class="name-block">
       <div class="sponsor-name">${s.name}</div>
-      <div class="sponsor-label">${s.label}</div>
+      <div class="sponsor-label">${displayLabel}</div>
       <div class="sponsor-amount">✦ ${s.amount}</div>
     </div>
     <div class="tier-badge">
